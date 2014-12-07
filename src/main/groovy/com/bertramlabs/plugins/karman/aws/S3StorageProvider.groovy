@@ -31,6 +31,7 @@ class S3StorageProvider extends StorageProvider {
     String accessKey = ''
     String secretKey = ''
     String region = ''
+    String endpoint = ''
 
 	Directory getDirectory(String name) {
 		new S3Directory(name: name, provider: this)
@@ -49,6 +50,10 @@ class S3StorageProvider extends StorageProvider {
             if (region) {
                 Region region = RegionUtils.getRegion(region)
                 client.region = region
+            }
+            if (endpoint) {
+            	client.endpoint = endpoint
+            	client.s3ClientOptions = new S3ClientOptions().withPathStyleAccess(true)
             }
         } else {
             return null
